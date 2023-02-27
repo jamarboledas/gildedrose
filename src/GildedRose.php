@@ -6,6 +6,12 @@ namespace GildedRose;
 
 final class GildedRose
 {
+    const AGED_BRIE = 'Aged Brie';
+
+    const BACKSTAGE_PASSES = 'Backstage passes to a TAFKAL80ETC concert';
+
+    const SULFURAS = 'Sulfuras, Hand of Ragnaros';
+
     /**
      * @param Item[] $items
      */
@@ -17,16 +23,16 @@ final class GildedRose
     public function updateQuality(): void
     {
         foreach ($this->items as $item) {
-            if ($item->name !== 'Aged Brie' and $item->name !== 'Backstage passes to a TAFKAL80ETC concert') {
+            if ($item->name !== self::AGED_BRIE and $item->name !== self::BACKSTAGE_PASSES) {
                 if ($item->quality > 0) {
-                    if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
+                    if ($item->name !== self::SULFURAS) {
                         $item = self::decreaseQuality($item);
                     }
                 }
             } else {
                 if ($item->quality < 50) {
                     $item = self::increaseQuality($item);
-                    if ($item->name === 'Backstage passes to a TAFKAL80ETC concert') {
+                    if ($item->name === self::BACKSTAGE_PASSES) {
                         if ($item->sellIn < 11) {
                             if ($item->quality < 50) {
                                 $item = self::increaseQuality($item);
@@ -41,15 +47,15 @@ final class GildedRose
                 }
             }
 
-            if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
+            if ($item->name !== self::SULFURAS) {
                 $item = self::decreaseSellIn($item);
             }
 
             if ($item->sellIn < 0) {
-                if ($item->name !== 'Aged Brie') {
-                    if ($item->name !== 'Backstage passes to a TAFKAL80ETC concert') {
+                if ($item->name !== self::AGED_BRIE) {
+                    if ($item->name !== self::BACKSTAGE_PASSES) {
                         if ($item->quality > 0) {
-                            if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
+                            if ($item->name !== self::SULFURAS) {
                                 $item = self::decreaseQuality($item);
                             }
                         }
