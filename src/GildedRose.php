@@ -23,34 +23,38 @@ final class GildedRose
     public function updateQuality(): void
     {
         foreach ($this->items as $item) {
-            if ($item->name !== self::AGED_BRIE and $item->name !== self::BACKSTAGE_PASSES and $item->name !== self::SULFURAS) {
-                $item = self::decreaseQuality($item);
-
-            } else {                
+            if ($item->name === self::AGED_BRIE) {
                 $item = self::increaseQuality($item);
-                if ($item->name === self::BACKSTAGE_PASSES) {
-                    if ($item->sellIn < 11) {
-                        $item = self::increaseQuality($item);
-                    }
-                    if ($item->sellIn < 6) {
-                        $item = self::increaseQuality($item);
-                    }
-                }
-            }
+                $item = self::decreaseSellIn($item);
+            } 
+            else if ($item->name === self::BACKSTAGE_PASSES) {
+                $item = self::increaseQuality($item);
 
-            if ($item->name !== self::SULFURAS) {
+                if ($item->sellIn < 11) {
+                    $item = self::increaseQuality($item);
+                }
+                if ($item->sellIn < 6) {
+                    $item = self::increaseQuality($item);
+                }
+                $item = self::decreaseSellIn($item);
+            }
+            else if ($item->name === self::SULFURAS) {
+                $item = self::increaseQuality($item);
+            }
+            else {                
+                $item = self::decreaseQuality($item);
                 $item = self::decreaseSellIn($item);
             }
 
             if ($item->sellIn < 0) {
-                if ($item->name !== self::AGED_BRIE) {
-                    if ($item->name !== self::BACKSTAGE_PASSES and $item->name !== self::SULFURAS) {
-                        $item = self::decreaseQuality($item);
-                    } else {
-                        $item = self::resetQuality($item);
-                    }
-                } else {
+                if ($item->name === self::AGED_BRIE) {
                     $item = self::increaseQuality($item);
+                } else if ($item->name === self::BACKSTAGE_PASSES) {
+                    $item = self::resetQuality($item);
+                } else if ($item->name === self::SULFURAS) {
+                    $item = self::resetQuality($item);
+                } else {
+                    $item = self::decreaseQuality($item);
                 }
             }
         }
