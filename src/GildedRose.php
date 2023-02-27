@@ -26,6 +26,11 @@ final class GildedRose
             if ($item->name === self::AGED_BRIE) {
                 $item = self::increaseQuality($item);
                 $item = self::decreaseSellIn($item);
+
+                if ($item->sellIn < 0) {
+                    $item = self::increaseQuality($item);
+                }
+
             } 
             else if ($item->name === self::BACKSTAGE_PASSES) {
                 $item = self::increaseQuality($item);
@@ -37,23 +42,23 @@ final class GildedRose
                     $item = self::increaseQuality($item);
                 }
                 $item = self::decreaseSellIn($item);
+
+                if ($item->sellIn < 0) {
+                    $item = self::resetQuality($item);
+                }
+
             }
             else if ($item->name === self::SULFURAS) {
                 $item = self::increaseQuality($item);
+                if ($item->sellIn < 0) {
+                    $item = self::resetQuality($item);
+                }
             }
             else {                
                 $item = self::decreaseQuality($item);
                 $item = self::decreaseSellIn($item);
-            }
 
-            if ($item->sellIn < 0) {
-                if ($item->name === self::AGED_BRIE) {
-                    $item = self::increaseQuality($item);
-                } else if ($item->name === self::BACKSTAGE_PASSES) {
-                    $item = self::resetQuality($item);
-                } else if ($item->name === self::SULFURAS) {
-                    $item = self::resetQuality($item);
-                } else {
+                if ($item->sellIn < 0) {
                     $item = self::decreaseQuality($item);
                 }
             }
