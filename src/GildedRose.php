@@ -20,21 +20,21 @@ final class GildedRose
             if ($item->name !== 'Aged Brie' and $item->name !== 'Backstage passes to a TAFKAL80ETC concert') {
                 if ($item->quality > 0) {
                     if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
-                        $item->quality = $item->quality - 1;
+                        $item = self::decreaseQuality($item);
                     }
                 }
             } else {
                 if ($item->quality < 50) {
-                    $item->quality = $item->quality + 1;
+                    $item = self::increaseQuality($item);
                     if ($item->name === 'Backstage passes to a TAFKAL80ETC concert') {
                         if ($item->sellIn < 11) {
                             if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
+                                $item = self::increaseQuality($item);
                             }
                         }
                         if ($item->sellIn < 6) {
                             if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
+                                $item = self::increaseQuality($item);
                             }
                         }
                     }
@@ -42,7 +42,7 @@ final class GildedRose
             }
 
             if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
-                $item->sellIn = $item->sellIn - 1;
+                $item = self::decreaseSellIn($item);
             }
 
             if ($item->sellIn < 0) {
@@ -50,18 +50,42 @@ final class GildedRose
                     if ($item->name !== 'Backstage passes to a TAFKAL80ETC concert') {
                         if ($item->quality > 0) {
                             if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
-                                $item->quality = $item->quality - 1;
+                                $item = self::decreaseQuality($item);
                             }
                         }
                     } else {
-                        $item->quality = $item->quality - $item->quality;
+                        $item = self::resetQuality($item);
                     }
                 } else {
                     if ($item->quality < 50) {
-                        $item->quality = $item->quality + 1;
+                        $item = self::increaseQuality($item);
                     }
                 }
             }
         }
+    }
+    
+    private function decreaseQuality(Item $item) : Item
+    {
+        $item->quality = $item->quality - 1;
+        return $item;
+    }
+
+    private function increaseQuality(Item $item) : Item
+    {
+        $item->quality = $item->quality + 1;
+        return $item;
+    }
+
+    private function resetQuality(Item $item) : Item 
+    {
+        $item->quality = 0;
+        return $item;
+    }
+
+    private function decreaseSellIn(Item $item) : Item
+    {
+        $item->sellIn = $item->sellIn - 1;
+        return $item;
     }
 }
