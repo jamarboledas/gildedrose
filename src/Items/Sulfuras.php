@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace GildedRose\Items;
 
-use GildedRose\Item;
-
-final class Sulfuras extends Item
+final class Sulfuras extends DefaultItem
 {
     const NAME = 'Sulfuras, Hand of Ragnaros';
 
@@ -22,21 +20,6 @@ final class Sulfuras extends Item
             $this->resetQuality();
         }
 
-        return $this;
-    }
-
-    private function increaseQuality() : self
-    {
-        if ($this->quality < 50) {
-            $this->quality = $this->quality + 1;
-        }
-
-        return $this;
-    }
-
-    private function resetQuality() : self 
-    {
-        $this->quality = 0;
         return $this;
     }
 }

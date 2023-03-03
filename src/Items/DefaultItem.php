@@ -6,7 +6,7 @@ namespace GildedRose\Items;
 
 use GildedRose\Item;
 
-final class DefaultItem extends Item
+class DefaultItem extends Item
 {
     public function __construct(public string $name, public int $sellIn,public int $quality) 
     {
@@ -25,18 +25,33 @@ final class DefaultItem extends Item
         return $this;
     }
 
-    private function decreaseSellIn() : self
+    protected function decreaseSellIn() : self
     {
         $this->sellIn = $this->sellIn - 1;
         return $this;
     }
 
-    private function decreaseQuality() : self
+    protected function decreaseQuality() : self
     {
         if ($this->quality > 0) {
             $this->quality = $this->quality - 1;
         }
 
+        return $this;
+    }
+
+    protected function increaseQuality() : self
+    {
+        if ($this->quality < 50) {
+            $this->quality = $this->quality + 1;
+        }
+
+        return $this;
+    }
+
+    protected function resetQuality() : self 
+    {
+        $this->quality = 0;
         return $this;
     }
 }

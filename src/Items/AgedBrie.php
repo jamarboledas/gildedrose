@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace GildedRose\Items;
 
-use GildedRose\Item;
-
-final class AgedBrie extends Item
+final class AgedBrie extends DefaultItem
 {
     const NAME = 'Aged Brie';
 
@@ -24,21 +22,6 @@ final class AgedBrie extends Item
             $this->increaseQuality();
         }
 
-        return $this;
-    }
-
-    private function increaseQuality() : self
-    {
-        if ($this->quality < 50) {
-            $this->quality = $this->quality + 1;
-        }
-
-        return $this;
-    }
-
-    private function decreaseSellIn() : self
-    {
-        $this->sellIn = $this->sellIn - 1;
         return $this;
     }
 }

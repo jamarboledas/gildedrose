@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace GildedRose\Items;
 
-use GildedRose\Item;
-
-final class BackstagePasses extends Item
+final class BackstagePasses extends DefaultItem
 {
     const NAME = 'Backstage passes to a TAFKAL80ETC concert';
 
@@ -33,27 +31,6 @@ final class BackstagePasses extends Item
             $this->resetQuality();
         }
 
-        return $this;
-    }
-
-    private function increaseQuality() : self
-    {
-        if ($this->quality < 50) {
-            $this->quality = $this->quality + 1;
-        }
-
-        return $this;
-    }
-
-    private function decreaseSellIn() : self
-    {
-        $this->sellIn = $this->sellIn - 1;
-        return $this;
-    }
-
-    private function resetQuality() : self 
-    {
-        $this->quality = 0;
         return $this;
     }
 }
